@@ -37,6 +37,9 @@ public class PlayerController : MonoBehaviour
             score = 0;
             health = 5;
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+            SceneManager.LoadScene("menu");
     }
 
     private void FixedUpdate()

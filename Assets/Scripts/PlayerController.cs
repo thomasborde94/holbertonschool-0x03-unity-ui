@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public int health = 5;
     public Transform[] _teleporters;
     [SerializeField] Text scoreText;
+    [SerializeField] Text healthText;
 
     #endregion
 
@@ -53,7 +54,7 @@ public class PlayerController : MonoBehaviour
         if (other.tag == "Trap")
         {
             health--;
-            Debug.Log("Health: " + health);
+            SetHealthText();
         }
 
         if (other.tag == "Goal")
@@ -131,6 +132,11 @@ public class PlayerController : MonoBehaviour
     private void SetScoreText()
     {
         scoreText.text = "Score: " + score.ToString();
+    }
+
+    private void SetHealthText()
+    {
+        healthText.text = "Health: " + health.ToString();
     }
     #endregion
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public int health = 5;
     public Transform[] _teleporters;
+    [SerializeField] Text scoreText;
 
     #endregion
 
@@ -44,7 +46,7 @@ public class PlayerController : MonoBehaviour
         if (other.tag == "Pickup")
         {
             score++;
-            Debug.Log("Score: " + score);
+            SetScoreText();
             Destroy(other.gameObject);
         }
 
@@ -126,6 +128,10 @@ public class PlayerController : MonoBehaviour
         _rigidbody.velocity = velocity;
     }
 
+    private void SetScoreText()
+    {
+        scoreText.text = "Score: " + score.ToString();
+    }
     #endregion
 
     #region Private 

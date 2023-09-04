@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
     public Transform[] _teleporters;
     [SerializeField] Text scoreText;
     [SerializeField] Text healthText;
+    [SerializeField] Text winLoseText;
+    [SerializeField] GameObject winLoseBG;
 
     #endregion
 
@@ -30,8 +32,8 @@ public class PlayerController : MonoBehaviour
 
         if (health == 0)
         {
-            Debug.Log("Game Over!");
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            GameOver();
+            StartCoroutine(LoadScene(3));
             score = 0;
             health = 5;
         }
@@ -59,7 +61,8 @@ public class PlayerController : MonoBehaviour
 
         if (other.tag == "Goal")
         {
-            Debug.Log("You win!");
+            YouWin();
+            StartCoroutine(LoadScene(3));
         }
 
         if (other.tag == "Teleporter" && CanTeleport)
@@ -138,8 +141,34 @@ public class PlayerController : MonoBehaviour
     {
         healthText.text = "Health: " + health.ToString();
     }
+
+    private void YouWin()
+    {
+        winLoseText.text = "You Win!";
+        winLoseText.color = Color.black;
+        winLoseBG.GetComponent<Image>().color = Color.green;
+        winLoseBG.SetActive(true);
+    }
+
+    private void GameOver()
+    {
+        winLoseText.text = "Game Over!";
+        winLoseText.color = Color.white;
+        winLoseBG.GetComponent<Image>().color = Color.red;
+        winLoseBG.SetActive(true);
+    }
     #endregion
 
+
+    #region Coroutine
+
+    IEnumerator LoadScene(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    #endregion
     #region Private 
 
     private Rigidbody _rigidbody;
